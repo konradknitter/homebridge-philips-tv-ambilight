@@ -80,13 +80,15 @@ class PhilipsTVAmbilightAccessory implements AccessoryPlugin {
     }
 
     setBrightness(value: CharacteristicValue, callback: CharacteristicSetCallback) {
-        this.log.debug('setBrightness: ' + value);
-        this.brightness = Number(value);
+        this.log.debug('setBrightness value: ' + value);
+        var correctedValue = Math.round(Number(value)*2.55);
+        this.brightness = correctedValue;
+        this.log.debug('setBrightness corrected value: ' + correctedValue);
         const request_body = {
             'color': {
                 'hue': this.hue,
                 'saturation': this.saturation,
-                'brightness': value,
+                'brightness': correctedValue,
             },
             'colordelta':{
                 'hue': 0,
